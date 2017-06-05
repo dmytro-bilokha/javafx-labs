@@ -31,7 +31,7 @@
                     </padding>
                 </TextField>
                 <Button fx:id="submitButton" mnemonicParsing="false" text="%submit"
-                        onMouseClicked="#submitHandler"/>
+                        onMouseClicked="#submitHandler" onKeyReleased="#submitHandler"/>
             </children>
         </HBox>
     </children>

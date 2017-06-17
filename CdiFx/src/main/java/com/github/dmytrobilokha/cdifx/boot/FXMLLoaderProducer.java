@@ -2,18 +2,13 @@ package com.github.dmytrobilokha.cdifx.boot;
 
 import javafx.fxml.FXMLLoader;
 import javafx.util.Callback;
-import org.apache.webbeans.config.WebBeansContext;
-import org.apache.webbeans.spi.ContainerLifecycle;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
 import java.util.ResourceBundle;
 
 public class FXMLLoaderProducer {
@@ -32,17 +27,22 @@ public class FXMLLoaderProducer {
     public FXMLLoader produce(InjectionPoint injectionPoint) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         System.out.println(Thread.currentThread().getName() + ' ' + Thread.currentThread().getId() + " PRODUCER PRODUCE fxmlLoader=" + fxmlLoader);
-        fxmlLoader.setControllerFactory( beanClass -> {
-            System.out.println(Thread.currentThread().getName() + ' ' + Thread.currentThread().getId() + " FACTORY CONTROLLER PRODUCE");
-            ContainerLifecycle lifecycle = WebBeansContext.getInstance().getService(ContainerLifecycle.class);
-            //BeanManager beanManager = lifecycle.getBeanManager();
-                    Bean<?> bean = beanManager.resolve(beanManager.getBeans(beanClass));
-                    return beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
-                }
-
-        );
+        fxmlLoader.setControllerFactory(new ControllerFactory());
         fxmlLoader.setResources(ResourceBundle.getBundle("messages"));
         return fxmlLoader;
     }
 
+    private class ControllerFactory implements Callback<Class<?>, Object> {
+
+        @Override
+        public Object call(Class controllerClass) {
+            Bean<?> bean = beanManager.resolve(beanManager.getBeans(controllerClass));
+            Object controllerObject = beanManager.getReference(bean
+                    , bean.getBeanClass(), beanManager.createCreationalContext(bean));
+            if (controllerObject == null)
+                throw new IllegalArgumentException("Failed to get instance of controller for class " + controllerClass);
+            return controllerObject;
+        }
+
+    }
 }

@@ -1,7 +1,6 @@
 package com.github.dmytrobilokha.cdifx.service;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Singleton;
 
 @ApplicationScoped
 public class MessageService {

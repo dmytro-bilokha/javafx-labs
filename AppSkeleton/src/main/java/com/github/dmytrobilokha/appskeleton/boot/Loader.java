@@ -18,10 +18,10 @@ import java.util.Set;
 
 public class Loader extends Application {
 
-    private static final String APPLICATION_NAME = "appskeleton";
-    private static final String APPLICATION_TITLE = "Java FX Application Skeleton";
-    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
-    private static final String CONFIG_DIR_PROPERTY_KEY = APPLICATION_NAME + ".configdir";
+    public static final String APPLICATION_NAME = "appskeleton";
+    public static final String APPLICATION_TITLE = "Java FX Application Skeleton";
+    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+    public static final String CONFIG_DIR_PROPERTY_KEY = APPLICATION_NAME + ".configdir";
     private static final String LOGFILE_PROPERTY_KEY = APPLICATION_NAME + ".logfile";
     private static final String MAIN_FXML = "/fxml/TabPanel.fxml";
 

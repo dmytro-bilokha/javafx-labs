@@ -13,6 +13,8 @@
         <application.bootstrapClass>com.github.dmytrobilokha.cdifx.boot.Loader</application.bootstrapClass>
 
         <owb.version>1.7.3</owb.version>
+        <logback.version>1.2.3</logback.version>
+        <jul-to-slf4j.version>1.7.25</jul-to-slf4j.version>
 
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
@@ -27,6 +29,18 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${jul-to-slf4j.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>

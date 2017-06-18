@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Loader extends Application {
 
-    private ContainerManager containerManager;
+    private static final Logger LOG = LoggerFactory.getLogger(Loader.class);
 
     public static void main(String[] args) {
         launch(args);
@@ -16,16 +18,15 @@ public class Loader extends Application {
 
     @Override
     public void init() {
-        containerManager = new ContainerManager();
-        containerManager.startContainer();
+        ContainerManager.startContainer();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = containerManager.getBeanByClass(FXMLLoader.class);
+        LOG.info("Starting the JavaFX application...");
+        FXMLLoader fxmlLoader = ContainerManager.getBeanByClass(FXMLLoader.class);
         if (fxmlLoader == null)
             throw new IllegalStateException("Failed to get FXMLLoader from ContainerManager");
-        System.out.println(Thread.currentThread().getName() + ' ' + Thread.currentThread().getId() + " WE ARE STARTING!!! And fxmlLoader=" + fxmlLoader);
         fxmlLoader.setLocation(getClass().getResource("/fxml/TabPanel.fxml"));
         Parent panel = fxmlLoader.load();
         Scene scene = new Scene(panel, 600, 400);
@@ -36,7 +37,6 @@ public class Loader extends Application {
 
     @Override
     public void stop() {
-        System.out.println("We are stopping...");
-        containerManager.stopContainer();
+        ContainerManager.stopContainer();
     }
 }

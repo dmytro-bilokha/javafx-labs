@@ -1,26 +1,31 @@
 package com.github.dmytrobilokha.cdifx.controller;
 
 import com.github.dmytrobilokha.cdifx.service.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+@Dependent
 public class TabPanelController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Tab2Controller.class);
+
     @Inject
-    private MessageService messageService;
-
-    public TabPanelController() {
-        System.out.println("TabPanelController noargs constructor called");
-    }
-
     public TabPanelController(MessageService messageService) {
-        this.messageService = messageService;
-        System.out.println("I'm TabPanelController and my message=" + messageService.getMessage());
+        LOG.info("TabPanelController constructor called. And message is '{}'", messageService.getMessage());
     }
 
     @PostConstruct
     public void init() {
-        System.out.println("TabPanelController POST INIT");
+        LOG.info("PostConstruct called");
+    }
+
+    @PreDestroy
+    public void cleanUp() {
+        LOG.info("PreDestroy called");
     }
 }

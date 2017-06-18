@@ -1,29 +1,42 @@
 package com.github.dmytrobilokha.cdifx.boot;
 
-import de.perdoctus.fx.Bundle;
-import de.perdoctus.fx.FxWeldApplication;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
+public class Loader extends Application {
 
-public class Loader extends FxWeldApplication {
+    private static final Logger LOG = LoggerFactory.getLogger(Loader.class);
 
-    @Inject
-    @Bundle("messages")
-    private FXMLLoader fxmlLoader;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
-    public void start(Stage primaryStage, Application.Parameters parameters) throws Exception {
-        System.out.println("WE ARE STARTING!!!");
-        Parent panel = fxmlLoader.load(getClass().getResource("/fxml/TabPanel.fxml"));
+    public void init() {
+        ContainerManager.startContainer();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        LOG.info("Starting the JavaFX application...");
+        FXMLLoader fxmlLoader = ContainerManager.getBeanByClass(FXMLLoader.class);
+        if (fxmlLoader == null)
+            throw new IllegalStateException("Failed to get FXMLLoader from ContainerManager");
+        fxmlLoader.setLocation(getClass().getResource("/fxml/TabPanel.fxml"));
+        Parent panel = fxmlLoader.load();
         Scene scene = new Scene(panel, 600, 400);
         primaryStage.setTitle("FXML with CDI example");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    @Override
+    public void stop() {
+        ContainerManager.stopContainer();
+    }
 }

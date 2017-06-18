@@ -5,14 +5,12 @@
     <parent>
 	<groupId>com.github.dmytro-bilokha</groupId>
 	<artifactId>appskeleton-parent</artifactId>
-	<version>1.0</version>
+	<version>1.0-SNAPSHOT</version>
     </parent>
 
 
     <artifactId>appskeleton</artifactId>
     <packaging>jar</packaging>
-
-    <version>1.0-SNAPSHOT</version>
     <name>appskeleton</name>
 
     <properties>

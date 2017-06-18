@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,11 +19,11 @@ import java.util.Set;
 public class Loader extends Application {
 
     private static final String APPLICATION_NAME = "appskeleton";
-    private static final String CONFIG_DIR_PROPERTY_KEY = APPLICATION_NAME + ".configdir";
-    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
     private static final String APPLICATION_TITLE = "Java FX Application Skeleton";
+    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
+    private static final String CONFIG_DIR_PROPERTY_KEY = APPLICATION_NAME + ".configdir";
+    private static final String LOGFILE_PROPERTY_KEY = APPLICATION_NAME + ".logfile";
     private static final String MAIN_FXML = "/fxml/TabPanel.fxml";
-    private static final Logger LOG = LoggerFactory.getLogger(Loader.class);
 
     public static void main(String[] args) {
         launch(args);
@@ -33,13 +31,14 @@ public class Loader extends Application {
 
     @Override
     public void init() {
+        String configDirLocation = initConfigDir();
+        setLogfileLocation(configDirLocation);
         ContainerManager.startContainer();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        LOG.info("Starting the JavaFX application...");
-        initConfigDir();
+        System.out.println("Starting " + APPLICATION_NAME + "...");
         FXMLLoader fxmlLoader = ContainerManager.getBeanByClass(FXMLLoader.class);
         if (fxmlLoader == null)
             throw new IllegalStateException("Failed to get FXMLLoader from ContainerManager");
@@ -56,18 +55,20 @@ public class Loader extends Application {
         ContainerManager.stopContainer();
     }
 
-    private void initConfigDir() {
-        if (System.getProperty(CONFIG_DIR_PROPERTY_KEY) != null)
-            return;
-        String configDirLocation = System.getProperty("user.home") + FILE_SEPARATOR
+    private String initConfigDir() {
+        String configDirLocation = System.getProperty(CONFIG_DIR_PROPERTY_KEY);
+        if (configDirLocation != null)
+            return configDirLocation;
+        configDirLocation = System.getProperty("user.home") + FILE_SEPARATOR
                 + ".config" + FILE_SEPARATOR + APPLICATION_NAME;
         Path configDirPath = Paths.get(configDirLocation);
         if (Files.exists(configDirPath) && Files.isDirectory(configDirPath)) {
             checkConfigDirValid(configDirPath);
-            return;
+        } else {
+            createConfigDir(configDirPath);
         }
-        createConfigDir(configDirPath);
         System.setProperty(CONFIG_DIR_PROPERTY_KEY, configDirLocation);
+        return  configDirLocation;
     }
 
     private void checkConfigDirValid(Path configDirPath) {
@@ -100,4 +101,11 @@ public class Loader extends Application {
         permissions.add(PosixFilePermission.OWNER_EXECUTE);
         return PosixFilePermissions.asFileAttribute(permissions);
     }
+
+    private void setLogfileLocation(String configDirLocation) {
+        if (System.getProperty(LOGFILE_PROPERTY_KEY) != null)
+            return;
+        System.setProperty(LOGFILE_PROPERTY_KEY, configDirLocation + FILE_SEPARATOR + APPLICATION_NAME + ".log");
+    }
+
 }

@@ -1,6 +1,10 @@
 package com.github.dmytrobilokha.appskeleton.controller;
 
 import com.github.dmytrobilokha.appskeleton.service.MessageService;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +17,11 @@ public class Tab1Controller {
 
     private static final Logger LOG = LoggerFactory.getLogger(Tab1Controller.class);
 
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private TextField name;
+
     private MessageService messageService;
 
     @Inject
@@ -24,6 +33,12 @@ public class Tab1Controller {
     @PostConstruct
     public void init() {
         LOG.info("PostConstruct called");
+    }
+
+    public void submitHandler(ActionEvent event) {
+        String nameSubmitted = name.getText();
+        LOG.info("Submitted name '{}'", nameSubmitted);
+        System.out.println("Submitted name: " + nameSubmitted);
     }
 
 }

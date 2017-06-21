@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
@@ -33,8 +34,14 @@ public class Tab2Controller implements StEventListener<String> {
 
     @PostConstruct
     public void init() {
-        LOG.info("PostConstruct called");
         eventBus.subscribe(StEvent.Type.USER_NAME_CHANGED, this);
+        LOG.debug("Subscribed to events");
+    }
+
+    @PreDestroy
+    public void shutDown() {
+        eventBus.unsubscribe(this);
+        LOG.debug("Unsubscribed from events");
     }
 
     @Override

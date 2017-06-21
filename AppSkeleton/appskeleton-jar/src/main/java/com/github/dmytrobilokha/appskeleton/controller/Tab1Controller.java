@@ -42,8 +42,8 @@ public class Tab1Controller {
     public void submitHandler(ActionEvent event) {
         String nameSubmitted = name.getText();
         LOG.info("Submitted name '{}'", nameSubmitted);
-        System.out.println("Submitted name: " + nameSubmitted);
-        eventBus.fire(StEvent.of(StEvent.Type.USER_NAME_CHANGED, nameSubmitted));
+        int notified = eventBus.fire(StEvent.of(StEvent.Type.USER_NAME_CHANGED, nameSubmitted));
+        LOG.debug("Notified " + notified + " listeners");
     }
 
 }

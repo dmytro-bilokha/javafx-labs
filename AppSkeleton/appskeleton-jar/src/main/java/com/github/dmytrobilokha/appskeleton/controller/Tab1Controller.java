@@ -1,5 +1,7 @@
 package com.github.dmytrobilokha.appskeleton.controller;
 
+import com.github.dmytrobilokha.appskeleton.controllerevent.StEvent;
+import com.github.dmytrobilokha.appskeleton.controllerevent.StEventBus;
 import com.github.dmytrobilokha.appskeleton.service.MessageService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 @Dependent
@@ -24,13 +25,13 @@ public class Tab1Controller {
     private TextField name;
 
     private MessageService messageService;
-    private Event<String> nameChangeEvent;
+    private StEventBus eventBus;
 
     @Inject
-    public Tab1Controller(MessageService messageService, Event<String> nameChangedEvent) {
+    public Tab1Controller(MessageService messageService, StEventBus eventBus) {
         LOG.info("Tab1Controller constructor called. And message is '{}'", messageService.getMessage());
         this.messageService = messageService;
-        this.nameChangeEvent = nameChangedEvent;
+        this.eventBus = eventBus;
     }
 
     @PostConstruct
@@ -42,7 +43,7 @@ public class Tab1Controller {
         String nameSubmitted = name.getText();
         LOG.info("Submitted name '{}'", nameSubmitted);
         System.out.println("Submitted name: " + nameSubmitted);
-        nameChangeEvent.fire(nameSubmitted);
+        eventBus.fire(StEvent.of(StEvent.Type.USER_NAME_CHANGED, nameSubmitted));
     }
 
 }

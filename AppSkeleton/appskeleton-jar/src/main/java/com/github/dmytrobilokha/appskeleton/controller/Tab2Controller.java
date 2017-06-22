@@ -7,7 +7,6 @@ import com.github.dmytrobilokha.appskeleton.service.MessageService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,14 +35,13 @@ public class Tab2Controller implements StEventListener<String> {
 
     @PostConstruct
     public void init() {
-        eventBus.subscribe(StEvent.Type.USER_NAME_CHANGED, this);
+        eventBus.subscribe(this, StEvent.Type.USER_NAME_CHANGED);
         LOG.debug("Subscribed to events");
     }
 
     @PreDestroy
     public void shutDown() {
-       // eventBus.unsubscribe(this);
-        LOG.debug("Unsubscribed from events");
+        LOG.debug("PreDestroy called and message is '{}'", messageService.getMessage()); //It never happens
     }
 
     public void uselessHandler(ActionEvent event) {

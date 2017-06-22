@@ -10,12 +10,12 @@
   <tabs>
     <Tab text="%tab1name">
       <content>
-        <fx:include source="Tab1.fxml"/>
+        <fx:include source="Tab1.fxml" fx:id="tab1"/>
       </content>
     </Tab>
     <Tab text="%tab2name">
       <content>
-        <fx:include source="Tab2.fxml"/>
+        <fx:include source="Tab2.fxml" fx:id="tab2"/>
       </content>
     </Tab>
   </tabs>

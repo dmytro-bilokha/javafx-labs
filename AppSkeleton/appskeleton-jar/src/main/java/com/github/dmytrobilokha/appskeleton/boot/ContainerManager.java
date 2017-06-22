@@ -12,16 +12,16 @@ import javax.enterprise.inject.spi.BeanManager;
 /**
  * The class to manage CDI container
  */
-class ContainerManager {
+public class ContainerManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(ContainerManager.class);
     private static ContainerLifecycle lifecycle = null;
 
     private ContainerManager() {
-        //The class should not be instantiated, all methods are static
+        //Not going to instantiate utility class
     }
 
-    static void startContainer() {
+    public static void startContainer() {
         if (lifecycle != null)
             throw new IllegalStateException("Unable to start the CDI container, seems like it is already started");
         LOG.info("Starting JUL->SLF4J logging bridge for the OpenWebBeans");
@@ -32,13 +32,13 @@ class ContainerManager {
         lifecycle.startApplication(null);
     }
 
-    static void stopContainer() {
+    public static void stopContainer() {
         if (lifecycle == null)
             throw new IllegalStateException("Unable to stop the CDI container, seems like it wasn't started");
         lifecycle.stopApplication(null);
     }
 
-    static <T> T getBeanByClass(Class<T> beanClass) {
+    public static <T> T getBeanByClass(Class<T> beanClass) {
         if (lifecycle == null)
             throw new IllegalStateException("Unable to get bean from class "
                     + beanClass + " the CDI container hasn't been started");

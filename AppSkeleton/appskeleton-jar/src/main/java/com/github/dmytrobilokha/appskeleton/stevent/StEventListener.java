@@ -1,4 +1,4 @@
-package com.github.dmytrobilokha.appskeleton.controllerevent;
+package com.github.dmytrobilokha.appskeleton.stevent;
 
 @FunctionalInterface
 public interface StEventListener<T> {

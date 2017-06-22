@@ -1,4 +1,4 @@
-package com.github.dmytrobilokha.appskeleton.controllerevent;
+package com.github.dmytrobilokha.appskeleton.stevent;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.ref.WeakReference;

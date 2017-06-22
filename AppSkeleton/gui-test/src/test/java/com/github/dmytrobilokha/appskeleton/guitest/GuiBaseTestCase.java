@@ -25,9 +25,11 @@ public abstract class GuiBaseTestCase extends ApplicationTest {
     }
 
     protected FXMLLoader getFXMLLoader() {
-        FXMLLoader fxmlLoader = new FXMLLoader();
+        FXMLLoader fxmlLoader = getCustomizedFXMLLoader();
+        if (fxmlLoader == null)
+                fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(getFxmlLocation()));
-        fxmlLoader.setResources(ResourceBundle.getBundle(getResourcesLocation()));
+        fxmlLoader.setResources(getResources());
         Callback<Class<?>, Object> controllerFactory = getControllerFactory();
         if (controllerFactory != null)
             fxmlLoader.setControllerFactory(controllerFactory);
@@ -36,11 +38,15 @@ public abstract class GuiBaseTestCase extends ApplicationTest {
 
     protected abstract String getFxmlLocation();
 
-    protected String getResourcesLocation() {
-        return "messages";
+    protected ResourceBundle getResources() {
+        return ResourceBundle.getBundle("messages");
     }
 
     protected Callback<Class<?>, Object> getControllerFactory() {
+        return null;
+    }
+
+    protected FXMLLoader getCustomizedFXMLLoader() {
         return null;
     }
 }

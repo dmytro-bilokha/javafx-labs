@@ -1,7 +1,7 @@
 package com.github.dmytrobilokha.appskeleton.controller;
 
-import com.github.dmytrobilokha.appskeleton.controllerevent.StEvent;
-import com.github.dmytrobilokha.appskeleton.controllerevent.StEventBus;
+import com.github.dmytrobilokha.appskeleton.stevent.StEvent;
+import com.github.dmytrobilokha.appskeleton.stevent.StEventBus;
 import com.github.dmytrobilokha.appskeleton.service.MessageService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

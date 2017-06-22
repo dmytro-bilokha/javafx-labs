@@ -4,8 +4,10 @@ import com.github.dmytrobilokha.appskeleton.controllerevent.StEvent;
 import com.github.dmytrobilokha.appskeleton.controllerevent.StEventBus;
 import com.github.dmytrobilokha.appskeleton.controllerevent.StEventListener;
 import com.github.dmytrobilokha.appskeleton.service.MessageService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +42,12 @@ public class Tab2Controller implements StEventListener<String> {
 
     @PreDestroy
     public void shutDown() {
-        eventBus.unsubscribe(this);
+       // eventBus.unsubscribe(this);
         LOG.debug("Unsubscribed from events");
+    }
+
+    public void uselessHandler(ActionEvent event) {
+        LOG.debug("Got event {}", event);
     }
 
     @Override

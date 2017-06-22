@@ -4,9 +4,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.Button?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.82-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.dmytrobilokha.appskeleton.controller.Tab2Controller">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="%undefined_name" fx:id="nameValueLabel"/>
+      <Button fx:id="uselessButton" mnemonicParsing="false" onAction="#uselessHandler" prefHeight="25.0" prefWidth="113.0" text="useless" />
    </children>
 </AnchorPane>

@@ -1,4 +1,4 @@
-package com.github.dmytrobilokha.appskeleton.guitest;
+package com.github.dmytrobilokha.appskeleton;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,10 +14,12 @@ import java.util.ResourceBundle;
  */
 public abstract class GuiBaseTestCase extends ApplicationTest {
 
+    private Parent parent;
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = getFXMLLoader();
-        Parent parent = fxmlLoader.load();
+        parent = fxmlLoader.load();
         Scene scene = new Scene(parent, 600, 400);
         stage.setTitle("Test " + getClass());
         stage.setScene(scene);
@@ -34,6 +36,10 @@ public abstract class GuiBaseTestCase extends ApplicationTest {
         if (controllerFactory != null)
             fxmlLoader.setControllerFactory(controllerFactory);
         return fxmlLoader;
+    }
+
+    protected Parent getParent() {
+        return parent;
     }
 
     protected abstract String getFxmlLocation();

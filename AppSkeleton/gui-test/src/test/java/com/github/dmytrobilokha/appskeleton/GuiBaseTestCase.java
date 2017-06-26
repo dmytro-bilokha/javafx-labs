@@ -16,6 +16,15 @@ public abstract class GuiBaseTestCase extends ApplicationTest {
 
     private Parent parent;
 
+    static {
+        if (System.getProperty("test.headless") != null) {
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+        }
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = getFXMLLoader();

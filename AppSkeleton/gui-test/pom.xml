@@ -41,6 +41,11 @@
             <artifactId>testfx-junit</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>openjfx-monocle</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

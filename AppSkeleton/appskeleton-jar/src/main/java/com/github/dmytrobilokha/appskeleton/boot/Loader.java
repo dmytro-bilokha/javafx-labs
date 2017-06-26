@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -88,7 +89,11 @@ public class Loader extends Application {
 
     private void createConfigDir(Path configDirPath) {
         try {
-            Files.createDirectories(configDirPath, buildConfigDirPermissions());
+            boolean isPosix = FileSystems.getDefault().supportedFileAttributeViews().contains("posix");
+            if (isPosix)
+                Files.createDirectories(configDirPath, buildConfigDirPermissions());
+            else
+                Files.createDirectories(configDirPath);
         } catch (IOException | UnsupportedOperationException | SecurityException ex) {
             throw new IllegalStateException("Unable to create config directory " + configDirPath, ex);
         }
